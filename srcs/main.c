@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:09:29 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/26 11:35:03 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/26 14:10:54 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int		main(void)
 {
-	ft_putstr("str");
+	t_opengl	o;
+
+	opengl_init(&o);
+	opengl_loop(&o);
 
 	return (0);
 }
