@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 16:02:14 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 12:29:51 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 14:38:17 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ GLuint		load_shader(GLenum type, char *filename)
 {
 	GLuint			shader;
 	GLint			compile_status;
-	const char		*src;
+	char			*src;
 
 	compile_status = GL_TRUE;
 	shader = glCreateShader(type);
@@ -53,10 +53,9 @@ GLuint		load_shader(GLenum type, char *filename)
 	src = load_file(filename);
 	if (src == NULL)
 		exit(-1);
-	glShaderSource(shader, 1, &src, NULL);
+	glShaderSource(shader, 1, (const char * const *) &src, NULL);
 	glCompileShader(shader);
-	free((void*)src);
-
+	free(src);
 	if (check_shader_error(shader, compile_status, filename) == 1)
 	{
 		glDeleteShader(shader);
@@ -65,48 +64,29 @@ GLuint		load_shader(GLenum type, char *filename)
 	return (shader);
 }
 
-char		*stock_file(FILE *fp, long size)
-{
-	char	*src;
-	long	i;
-
-	src = (char*)malloc(sizeof(size) + 1);
-	if (src == NULL)
-	{
-		fclose(fp);
-		ft_putstr("Error : Probleme d'allocation de memoire");
-		return NULL;
-	}
-	i = 0;
-	while (i < size)
-	{
-		src[i] = fgetc(fp);
-		i++;
-	}
-	src[size] = '\0';
-
-	return (src);
-}
-
 char		*load_file(char *filename)
 {
-	char	*src;
-	FILE	*fp;
-	long	size;
+	int		fd;
+	char	buff[1024];
+	char	*content;
+	char	*tmp;
 
-	fp = fopen(filename, "r");
-	if (fp == NULL)
+	ft_bzero(buff, 1024);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	read(fd, buff, 1024);
+	content = ft_strdup(buff);
+	ft_bzero(buff, 1024);
+	while (read(fd, buff, 1024) == 1024)
 	{
-		ft_putstr("Error : Impossible d'ouvrir le fichier ");
-		ft_putendl(filename);
-		return NULL;
+		tmp = ft_strdup(content);
+		free(content);
+		content = ft_strjoin(tmp, buff);
+		free(tmp);
+		ft_bzero(buff, 1024);
 	}
+	close(fd);
 
-	fseek(fp, 0, SEEK_END);
-	size = ftell(fp);
-	rewind(fp);
-	src = stock_file(fp, size);
-	fclose(fp);
-
-	return (src);
+	return (content);
 }

@@ -6,19 +6,17 @@
 #    By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/26 11:29:55 by nschilli          #+#    #+#              #
-#    Updated: 2015/05/27 12:26:58 by nschilli         ###   ########.fr        #
+#    Updated: 2015/05/27 14:10:36 by nschilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =	scop
 
-PATHGLFW = /nfs/zfs-student-4/users/2013/nschilli/.brew/Cellar
-
 SRCDIR = srcs/
 
 HDDIR = -I includes/
 
-HDDIR += -I $(PATHGLFW)/glfw3/3.1.1/include/
+HDDIR += -I ~/.brew/include/
 
 CFILES =	main.c \
 			get_next_line.c \
@@ -34,7 +32,7 @@ OBJ = $(SRC:.c=.o)
 
 CFLAGS	= -Wall -Wextra -Werror -O3 -g
 
-LIBOPENGL =	-L ~/.brew/Cellar/glfw3/3.1.1/lib/ -lglfw3 -framework OpenGL
+LIBOPENGL =	-L ~/.brew/lib/ -lglfw3 -framework OpenGL
 
 all: $(NAME)
 

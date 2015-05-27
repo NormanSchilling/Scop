@@ -6,23 +6,24 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 12:26:43 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 14:37:55 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCOP_H
 # define SCOP_H
 
+# define GLFW_INCLUDE_GLCOREARB
+# define BUFF_SIZE 128
+# define WIDTH 1000
+# define HEIGHT 700
+
 # include <GLFW/glfw3.h>
-# include <OpenGL/gl.h>
 # include "../libft/libft.h"
 
 # include <stdlib.h>
 # include <stdio.h>
-
-# define BUFF_SIZE 128
-# define WIDTH 1000
-# define HEIGHT 700
+# include <fcntl.h>
 
 typedef struct		s_opengl
 {
@@ -36,11 +37,10 @@ void			opengl_loop(t_opengl *o);
 
 int				check_shader_error(GLuint shader,
 					GLint	compile_status, char *filename);
-GLuint			load_shader(GLenum type, char *filename);	
-char			*stock_file(FILE *fp, long size);
+GLuint			load_shader(GLenum type, char *filename);
 char			*load_file(char *filename);
 
-int				check_program_error(GLuint program, GLint compile_status);
+int				check_program_error(GLuint program, GLint link_status);
 GLuint			load_program(GLuint shader_vertex, GLuint shader_frag);
 
 #endif
