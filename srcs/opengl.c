@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 14:40:18 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 14:58:16 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,51 +35,40 @@ void	opengl_init(t_opengl *o)
 	glfwSwapInterval(1);
 }
 
+void	opengl_draw(GLuint vertex_buffer)
+{
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDisableVertexAttribArray(0);
+}
+
 void	opengl_loop(t_opengl *o)
 {
 	GLuint		program;
-	GLuint		shader_vertex;
-	GLuint		shader_frag;
-	GLuint		vertexbuffer;
-	GLuint		VertexArrayID;
-	GLfloat		data[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-	};
+	GLuint		vertex_buffer;
+	GLuint		vertex_array_id;
+	GLfloat		data[] = { -1.0f, -1.0f, 0.0f,
+							1.0f, -1.0f, 0.0f,
+							0.0f, 1.0f, 0.0f };
 
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
-	shader_vertex = load_shader(GL_VERTEX_SHADER, "shaders/shader_first.vert");
-	shader_frag = load_shader(GL_FRAGMENT_SHADER, "shaders/shader_first.frag");
-	program = load_program(shader_vertex, shader_frag);
-	glDeleteShader(shader_vertex);
-	glDeleteShader(shader_frag);
-
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glGenVertexArrays(1, &vertex_array_id);
+	glBindVertexArray(vertex_array_id);
+	program = load_program();
+	glGenBuffers(1, &vertex_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(data),
 		data, GL_STATIC_DRAW);
-
 	while (glfwGetKey(o->window, GLFW_KEY_ESCAPE) != GLFW_PRESS
 		&& !glfwWindowShouldClose(o->window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// glMatrixMode(GL_MODELVIEW);
-		// glLoadIdentity( );
 		glUseProgram(program);
-
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDisableVertexAttribArray(0);
-
+		opengl_draw(vertex_buffer);
 		glfwPollEvents();
 		glfwSwapBuffers(o->window);
 	}
-	glUseProgram(0);
 	glDeleteProgram(program);
 	glfwTerminate();
 }

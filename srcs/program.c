@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/27 11:34:45 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 14:20:36 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 14:59:43 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ int			check_program_error(GLuint program, GLint link_status)
 		ft_putendl("Error : impossible de link le program");
 		ft_putendl(log_program);
 		free(log_program);
-		// ft_putendl("check_program_error is OK => return 1");
 		return (1);
 	}
-	// ft_putendl("check_program_error is OK => return 0");
 	return (0);
 }
 
@@ -44,9 +42,12 @@ GLuint		load_program(GLuint shader_vertex, GLuint shader_frag)
 {
 	GLuint		program;
 	GLint		link_status;
-
+	GLuint		shader_vertex;
+	GLuint		shader_frag;
 
 	link_status = GL_TRUE;
+	shader_vertex = load_shader(GL_VERTEX_SHADER, "shaders/shader_first.vert");
+	shader_frag = load_shader(GL_FRAGMENT_SHADER, "shaders/shader_first.frag");
 	program = glCreateProgram();
 	glAttachShader(program, shader_vertex);
 	glAttachShader(program, shader_frag);
@@ -58,6 +59,7 @@ GLuint		load_program(GLuint shader_vertex, GLuint shader_frag)
 		glDeleteProgram(program);
 		exit(-1);
 	}
-	// ft_putendl("load_program is OK");
+	glDeleteShader(shader_vertex);
+	glDeleteShader(shader_frag);
 	return (program);
 }

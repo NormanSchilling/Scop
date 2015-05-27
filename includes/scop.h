@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 14:37:55 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 14:55:55 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_opengl
 int				get_next_line(const int fd, char **line);
 
 void			opengl_init(t_opengl *o);
+void			opengl_draw(GLuint vertex_buffer);
 void			opengl_loop(t_opengl *o);
 
 int				check_shader_error(GLuint shader,
@@ -41,6 +42,6 @@ GLuint			load_shader(GLenum type, char *filename);
 char			*load_file(char *filename);
 
 int				check_program_error(GLuint program, GLint link_status);
-GLuint			load_program(GLuint shader_vertex, GLuint shader_frag);
+GLuint			load_program();
 
 #endif
