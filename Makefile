@@ -6,7 +6,7 @@
 #    By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/26 11:29:55 by nschilli          #+#    #+#              #
-#    Updated: 2015/05/27 14:10:36 by nschilli         ###   ########.fr        #
+#    Updated: 2015/05/27 16:17:53 by nschilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ CFILES =	main.c \
 			opengl.c \
 			utils.c \
 			program.c \
+			matrice.c \
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
 

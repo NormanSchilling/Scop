@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/27 11:34:45 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 14:59:43 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 16:22:30 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			check_program_error(GLuint program, GLint link_status)
 	return (0);
 }
 
-GLuint		load_program(GLuint shader_vertex, GLuint shader_frag)
+GLuint		load_program()
 {
 	GLuint		program;
 	GLint		link_status;
@@ -52,14 +52,13 @@ GLuint		load_program(GLuint shader_vertex, GLuint shader_frag)
 	glAttachShader(program, shader_vertex);
 	glAttachShader(program, shader_frag);
 	glLinkProgram(program);
+	glDeleteShader(shader_vertex);
+	glDeleteShader(shader_frag);
 	if (check_program_error(program, link_status) == 1)
 	{
-		glDetachShader(program, shader_vertex);
-		glDetachShader(program, shader_frag);
 		glDeleteProgram(program);
 		exit(-1);
 	}
-	glDeleteShader(shader_vertex);
-	glDeleteShader(shader_frag);
+
 	return (program);
 }

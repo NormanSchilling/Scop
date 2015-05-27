@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 14:55:55 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 16:47:56 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <GLFW/glfw3.h>
 # include "../libft/libft.h"
 
+# include "matrice.h"
+# include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
