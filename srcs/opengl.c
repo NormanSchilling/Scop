@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 12:21:10 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 12:26:17 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	opengl_loop(t_opengl *o)
 
 		glUseProgram(program);
 
+		glDeleteShader(shader_vertex);
+		glDeleteShader(shader_frag);
+
 		glFlush();
 		glfwSwapBuffers(o->window);
 		glfwPollEvents();
@@ -64,6 +67,6 @@ void	opengl_loop(t_opengl *o)
 	glUseProgram(0);
 	// glDetachShader(program, shader);
 	glDeleteProgram(program);
-	glDeleteShader(shader);
+	
 	glfwTerminate();
 }

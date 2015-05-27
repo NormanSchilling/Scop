@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/27 11:34:45 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 12:20:59 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/27 12:30:14 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ GLuint		load_program(GLuint shader_vertex, GLuint shader_frag)
 	glLinkProgram(program);
 	if (check_program_error(program, compile_status) == 1)
 	{
-		glDetachShader(program, shader);
+		glDetachShader(program, shader_vertex);
+		glDetachShader(program, shader_frag);
 		glDeleteProgram(program);
 		exit(-1);
 	}
