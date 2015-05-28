@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/28 14:19:50 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/28 16:28:04 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	opengl_loop(t_opengl *o)
 	t_mat		m_projection;
 	t_mat		m_view;
 	t_mat		m_model;
-	GLfloat		data[] = { -1.0f, -1.0f, 0.0f,
-							1.0f, -1.0f, 0.0f,
-							0.0f, 1.0f, 0.0f };
+	GLfloat		data[] = { -0.5f, -0.5f, 0.0f,
+							0.5f, -0.5f, 0.0f,
+							0.0f, 0.5f, 0.0f };
 
 	glGenVertexArrays(1, &vertex_array_id);
 	glBindVertexArray(vertex_array_id);
-	m_projection = matrice_projection(65.f, 0.1, 100.f);
+	m_projection = matrice_projection(60.0f, 1.0f, 100.0f);
 	matrice_fetch(m_projection.mat);
 	m_view = matrice_init();
 	m_model = matrice_init();
