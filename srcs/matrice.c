@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/27 15:35:12 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/28 14:12:42 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/28 14:45:46 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,20 @@ t_mat		matrice_projection(float angle, float near_z, float far_z)
 	t_mat		m;
 	float		ratio;
 	float		theta;
+	float		t_angle;
+	float		z_range;
 
 	ratio = WIDTH / HEIGHT;
-	theta = (angle * M_PI) / 180;
+	theta = (angle * M_PI) / 180.f;
+	t_angle = tan(theta / 2.f);
+	z_range = near_z - far_z;
 	m = matrice_init();
-	m.mat[0][0] = 1 / ratio * tan(theta / 2);
-	m.mat[1][1] = 1 / tan(theta / 2);
-	m.mat[2][2] = (- near_z - far_z) / (near_z - far_z);
-	m.mat[2][3] = 1;
-	m.mat[3][2] = (2 * near_z * far_z) / (near_z - far_z);
-	m.mat[3][3] = 0;
+	m.mat[0][0] = 1.f / (ratio * t_angle);
+	m.mat[1][1] = 1.f / t_angle;
+	m.mat[2][2] = (- near_z - far_z) / z_range;
+	m.mat[2][3] = 1.f;
+	m.mat[3][2] = (2.f * far_z * near_z) / z_range;
+	m.mat[3][3] = 0.f;
 
 	return (m);
 }

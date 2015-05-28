@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 16:47:56 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/28 14:44:37 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define GLFW_INCLUDE_GLCOREARB
 # define BUFF_SIZE 128
-# define WIDTH 1000
-# define HEIGHT 700
+# define WIDTH 1000.f
+# define HEIGHT 700.f
 
 # include <GLFW/glfw3.h>
 # include "../libft/libft.h"

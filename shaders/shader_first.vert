@@ -9,4 +9,5 @@ void main()
 {
 	vec4 v = vec4(vertexPosition_modelspace, 1);
 	gl_Position = m_projection * m_view * m_model * v;
+	gl_Position.w = 1;
 }
