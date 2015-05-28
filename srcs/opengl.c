@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 15:34:08 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/05/28 14:19:50 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,26 @@ void	opengl_loop(t_opengl *o)
 	GLuint		program;
 	GLuint		vertex_buffer;
 	GLuint		vertex_array_id;
+	GLuint		m_projection_location;
+	GLuint		m_view_location;
+	GLuint		m_model_location;
+	t_mat		m_projection;
+	t_mat		m_view;
+	t_mat		m_model;
 	GLfloat		data[] = { -1.0f, -1.0f, 0.0f,
 							1.0f, -1.0f, 0.0f,
 							0.0f, 1.0f, 0.0f };
 
 	glGenVertexArrays(1, &vertex_array_id);
 	glBindVertexArray(vertex_array_id);
+	m_projection = matrice_projection(65.f, 0.1, 100.f);
+	matrice_fetch(m_projection.mat);
+	m_view = matrice_init();
+	m_model = matrice_init();
 	program = load_program();
+	m_projection_location = glGetUniformLocation(program, "m_projection");
+	m_view_location = glGetUniformLocation(program, "m_view");
+	m_model_location = glGetUniformLocation(program, "m_model");
 	glGenBuffers(1, &vertex_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(data),
@@ -65,6 +78,9 @@ void	opengl_loop(t_opengl *o)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(program);
+		glUniformMatrix4fv(m_projection_location, 1, GL_FALSE, &m_projection.mat[4][4]);
+		glUniformMatrix4fv(m_view_location, 1, GL_FALSE, &m_view.mat[4][4]);
+		glUniformMatrix4fv(m_model_location, 1, GL_FALSE, &m_model.mat[4][4]);
 		opengl_draw(vertex_buffer);
 		glfwPollEvents();
 		glfwSwapBuffers(o->window);
