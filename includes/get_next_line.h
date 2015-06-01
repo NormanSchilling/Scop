@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/05/26 11:09:29 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 13:57:59 by nschilli         ###   ########.fr       */
+/*   Created: 2015/06/01 14:21:51 by nschilli          #+#    #+#             */
+/*   Updated: 2015/06/01 14:22:42 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# include <unistd.h>
+# include <stdlib.h>
+# define BUFF_SIZE 4096
 
-int		main(void)
+typedef struct		s_read
 {
-	// t_opengl	o;
+	int				size;
+	int				index;
+	int				fd;
+	char			*read;
+	struct s_read	*next;
+}					t_read;
 
-	parser();
-	// opengl_init(&o);
-	// opengl_before_loop(&o);
-	// opengl_loop(&o);
+int					get_next_line(int const fd, char **line);
 
-	return (0);
-}
+#endif

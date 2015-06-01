@@ -6,81 +6,130 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/12/02 13:39:36 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/26 11:36:16 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/01 14:21:38 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+#include "get_next_line.h"
 
-static int		ft_checkline(char *str)
+static t_read		*ft_freeread(t_read *red, t_read *prev, t_read **start)
 {
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (-1);
+	if (!prev)
+		*start = red->next;
+	else
+		prev->next = red->next;
+	free(red->read);
+	free(red);
+	if (!prev)
+		return (*start);
+	else
+		return (prev->next);
 }
 
-static char		*ft_fillstr(char *str, int n)
+static t_read		*ft_newread(int fd)
 {
-	char	*s;
-	int		i;
+	t_read			*red;
+	void			*tmp;
+	int				ret;
 
-	i = 0;
-	s = (char *)malloc(sizeof(char) * (ft_strlen(str) - n) + 1);
-	while (str[n])
-		s[i++] = str[n++];
-	s[i] = '\0';
-	free(str);
-	return (s);
+	if (!(red = (t_read *)malloc(sizeof(t_read))))
+		return (NULL);
+	if (!(tmp = malloc(sizeof(char) * BUFF_SIZE)))
+	{
+		free(red);
+		return (NULL);
+	}
+	if ((ret = read(fd, tmp, BUFF_SIZE)) < 0)
+	{
+		free(red);
+		free(tmp);
+		return (NULL);
+	}
+	red->read = (char *)tmp;
+	red->fd = fd;
+	red->size = ret;
+	red->next = NULL;
+	red->index = 0;
+	return (red);
 }
 
-static char		*ft_get_line(char *str, int n)
+static int			ft_print(int n, t_read **tab, t_read **s, char **l)
 {
-	int		i;
-	char	*line;
+	char			*tmpstr;
+	int				index;
 
-	i = 0;
-	line = (char *)malloc(sizeof(char) * n + 1);
-	while (str[i] != '\n' && str[i] != '\0')
+	if (!tab[0])
+		return (-1);
+	index = (tab[0])->index;
+	if (n == -1 || !(tmpstr = (char *)malloc(sizeof(char) * (n + 1))))
+		return (-1);
+	*l = tmpstr;
+	while (n--)
 	{
-		line[i] = str[i];
-		i++;
+		*tmpstr++ = (tab[0])->read[index++];
+		if (index == (tab[0])->size)
+		{
+			tab[0] = ft_freeread(tab[0], tab[1], s);
+			index = 0;
+		}
 	}
-	line[i] = '\0';
-	return (line);
-}
-
-int				get_next_line(const int fd, char **line)
-{
-	static	char	*str = "";
-	static	int		ret = -1;
-	char			buf[BUFF_SIZE + 1];
-
-	while (ft_checkline(str) == -1 && ret != 0 && ret != -2)
-	{
-		ret = read(fd, buf, BUFF_SIZE);
-		buf[ret] = '\0';
-		str = ft_strjoin(str, buf);
-	}
-	if (ret != 0 && ret != -2)
-	{
-		line[0] = ft_get_line(str, ft_checkline(str));
-		str = ft_fillstr(str, ft_checkline(str) + 1);
-		return (1);
-	}
-	else if (ret == 0)
-	{
-		line[0] = ft_get_line(str, ft_strlen(str));
-		ret = -2;
-		return (1);
-	}
-	else if (ret == -2)
+	*tmpstr = 0;
+	if (!tab[0] || (index == tab[0]->size && tab[0]->size < BUFF_SIZE))
 		return (0);
-	return (-1);
+	tab[0]->index = index + 1;
+	if (tab[0]->index == tab[0]->size)
+		tab[0] = ft_freeread(tab[0], tab[1], s);
+	return (1);
+}
+
+static int			ft_findendl(int fd, t_read *red)
+{
+	int				index;
+	int				size;
+	t_read			*tmplst;
+
+	size = 0;
+	index = red->index;
+	while (red->read[index] != '\n' && index < red->size)
+	{
+		index++;
+		size++;
+		if (index == red->size && red->size == BUFF_SIZE)
+		{
+			if (!(tmplst = ft_newread(fd)))
+				return (-1);
+			tmplst->next = red->next;
+			red->next = tmplst;
+			red = tmplst;
+			index = 0;
+		}
+	}
+	return (size);
+}
+
+int					get_next_line(int fd, char **line)
+{
+	static t_read	*start = NULL;
+	t_read			*red;
+	t_read			*prevtmp;
+	t_read			*tab[2];
+
+	if (fd < 0)
+		return (-1);
+	prevtmp = NULL;
+	if (!start)
+		start = ft_newread(fd);
+	red = start;
+	while (red->fd != fd)
+	{
+		if (!(red->next))
+			red->next = ft_newread(fd);
+		prevtmp = red;
+		red = red->next;
+	}
+	if (!red || !start)
+		return (-1);
+	tab[0] = red;
+	tab[1] = prevtmp;
+	return (ft_print(ft_findendl(fd, red), tab, &start, line));
 }
