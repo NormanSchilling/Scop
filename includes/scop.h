@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/28 15:06:16 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/01 13:29:06 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,23 @@
 typedef struct		s_opengl
 {
 	GLFWwindow		*window;
+	GLuint			m_projection_location;
+	GLuint			m_view_location;
+	GLuint			m_model_location;
+	GLuint			program;
+	GLuint			vertex_buffer;
+	GLuint			vertex_array_id;
+	t_mat			m_projection;
+	t_mat			m_view;
+	t_mat			m_model;
+	t_mat			m_rotate;
 }					t_opengl;
 
 int				get_next_line(const int fd, char **line);
 
 void			opengl_init(t_opengl *o);
 void			opengl_draw(GLuint vertex_buffer);
+void			opengl_before_loop(t_opengl *o);
 void			opengl_loop(t_opengl *o);
 
 int				check_shader_error(GLuint shader,

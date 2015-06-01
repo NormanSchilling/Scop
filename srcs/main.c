@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:09:29 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/28 12:18:40 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/01 13:28:08 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main(void)
 	t_opengl	o;
 
 	opengl_init(&o);
+	opengl_before_loop(&o);
 	opengl_loop(&o);
 
 	return (0);
