@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 15:37:28 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/01 17:42:14 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,56 @@
 # include <stdio.h>
 # include <fcntl.h>
 
-typedef struct			s_listvertex
+typedef struct				s_listvertex
 {
-	float				point;
-	struct s_listvertex	*next;
-}						t_listvertex;
+	float					point;
+	struct s_listvertex		*next;
+}							t_listvertex;
 
-typedef struct			s_opengl
+typedef struct				s_listfragment
 {
-	GLFWwindow			*window;
-	GLuint				m_projection_location;
-	GLuint				m_view_location;
-	GLuint				m_model_location;
-	GLuint				program;
-	GLuint				vertex_buffer;
-	GLuint				vertex_array_id;
-	t_mat				m_projection;
-	t_mat				m_view;
-	t_mat				m_model;
-	t_mat				m_rotate;
-	t_listvertex		*listvertex;
-	float				*buffvertex;
-}						t_opengl;
+	int						point;
+	struct s_listfragment	*next;
+}							t_listfragment;
+
+typedef struct				s_opengl
+{
+	GLFWwindow				*window;
+	GLuint					m_projection_location;
+	GLuint					m_view_location;
+	GLuint					m_model_location;
+	GLuint					program;
+	GLuint					vertex_buffer;
+	GLuint					element_buffer;
+	GLuint					vertex_array_id;
+	t_mat					m_projection;
+	t_mat					m_view;
+	t_mat					m_model;
+	t_mat					m_rotate;
+	t_listvertex			*listvertex;
+	GLfloat					*buffvertex;
+	t_listfragment			*listfragment;
+	GLint					*bufffragment;
+}							t_opengl;
+
+int				listfragment_size(t_listfragment *beginlist);
+void			listfragment_pushback(t_listfragment **beginlist,
+	t_listfragment *newlist);
+t_listfragment	*ft_listfragment_new(float point);
 
 int				listvertex_size(t_listvertex *beginlist);
 void			listvertex_pushback(t_listvertex **beginlist,
 	t_listvertex *newlist);
 t_listvertex	*ft_listvertex_new(float point);
 
-float			*get_buffvertex(t_opengl *o);
 t_listvertex	*get_listvertex(int fd);
+t_listfragment	*get_listfragment(int fd);
+float			*get_buffvertex(t_opengl *o);
+int				*get_bufffragment(t_opengl *o);
 void			parser(t_opengl *o);
 
 void			opengl_init(t_opengl *o);
-void			opengl_draw(GLuint vertex_buffer);
+void			opengl_draw(t_opengl *o);
 void			opengl_before_loop(t_opengl *o);
 void			opengl_loop(t_opengl *o);
 

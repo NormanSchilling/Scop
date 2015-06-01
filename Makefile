@@ -6,7 +6,7 @@
 #    By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/26 11:29:55 by nschilli          #+#    #+#              #
-#    Updated: 2015/06/01 15:11:04 by nschilli         ###   ########.fr        #
+#    Updated: 2015/06/01 17:19:44 by nschilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ CFILES =	main.c \
 			matrice_multiplication.c \
 			parser.c \
 			list_vertex.c \
+			list_fragment.c \
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
 

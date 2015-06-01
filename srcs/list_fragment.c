@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_vertex.c                                      :+:      :+:    :+:   */
+/*   list_fragment.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/06/01 15:01:30 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 17:57:45 by nschilli         ###   ########.fr       */
+/*   Created: 2015/06/01 17:07:01 by nschilli          #+#    #+#             */
+/*   Updated: 2015/06/01 17:21:28 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-int		listvertex_size(t_listvertex *beginlist)
+int		listfragment_size(t_listfragment *beginlist)
 {
-	t_listvertex	*node;
+	t_listfragment	*node;
 	int				i;
 
 	i = 0;
@@ -27,10 +27,9 @@ int		listvertex_size(t_listvertex *beginlist)
 	return (i);
 }
 
-
-void	listvertex_pushback(t_listvertex **beginlist, t_listvertex *newlist)
+void	listfragment_pushback(t_listfragment **beginlist, t_listfragment *newlist)
 {
-	t_listvertex	*tmp;
+	t_listfragment	*tmp;
 
 	tmp = *beginlist;
 	if (tmp == NULL)
@@ -43,16 +42,13 @@ void	listvertex_pushback(t_listvertex **beginlist, t_listvertex *newlist)
 	}
 }
 
-
-t_listvertex	*ft_listvertex_new(float point)
+t_listfragment	*ft_listfragment_new(float point)
 {
-	t_listvertex	*node;
+	t_listfragment	*node;
 
-	if ((node = (t_listvertex *)malloc(sizeof(t_listvertex))) == NULL)
+	if ((node = (t_listfragment *)malloc(sizeof(t_listfragment))) == NULL)
 		return (NULL);
-
 	node->point = point;
-	printf("node->point = %f\n", node->point);
 	node->next = NULL;
 	return (node);
 }
