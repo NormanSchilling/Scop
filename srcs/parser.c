@@ -6,13 +6,13 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 13:51:54 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 15:17:23 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/01 15:43:14 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void		parser_vertex(int fd)
+t_listvertex		*get_listvertex(int fd)
 {
 	int				i;
 	char			*line;
@@ -34,30 +34,38 @@ void		parser_vertex(int fd)
 			free(line);
 		}
 	}
-	printf("%d\n", listvertex_size(listvertex));
+	return (listvertex);
 }
 
-void		parser_fragment(int fd)
+float		*get_buffvertex(t_opengl *o)
 {
-	char	*line;
+	int				i;
+	float			*buffvertex;
+	t_listvertex	*tmp;
 
-	line = NULL;
-	while (get_next_line(fd, &line))
+	tmp = o->listvertex;
+
+	i = listvertex_size(o->listvertex);
+	printf("%d\n", i);
+	buffvertex = (float*)malloc(sizeof(float) * i);
+	if (buffvertex == NULL)
+		exit(-1);
+	i = 0;
+	while (tmp->next != NULL)
 	{
-		if (line[0] == 'f')
-		{
-			free(line);
-		}
+		buffvertex[i] = o->listvertex->point;
+		tmp = tmp->next;
+		i++;
 	}
+	return (buffvertex);
 }
 
-void		parser()
+void		parser(t_opengl *o)
 {
-	int		fd;
+	int				fd;
 
 	fd = open("resources/42.obj", O_RDONLY);
-	parser_vertex(fd);
-	fd = open("resources/42.obj", O_RDONLY);
-	parser_fragment(fd);
+	o->listvertex = get_listvertex(fd);
+	o->buffvertex = get_buffvertex(o);
 	close(fd);
 }

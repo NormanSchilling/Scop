@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 15:15:45 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/01 15:37:28 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+typedef struct			s_listvertex
+{
+	float				point;
+	struct s_listvertex	*next;
+}						t_listvertex;
+
 typedef struct			s_opengl
 {
 	GLFWwindow			*window;
@@ -40,22 +46,18 @@ typedef struct			s_opengl
 	t_mat				m_view;
 	t_mat				m_model;
 	t_mat				m_rotate;
+	t_listvertex		*listvertex;
+	float				*buffvertex;
 }						t_opengl;
-
-typedef struct			s_listvertex
-{
-	float				point;
-	struct s_listvertex	*next;
-}						t_listvertex;
 
 int				listvertex_size(t_listvertex *beginlist);
 void			listvertex_pushback(t_listvertex **beginlist,
 	t_listvertex *newlist);
 t_listvertex	*ft_listvertex_new(float point);
 
-void			parser_vertex(int fd);
-void			parser_fragment(int fd);
-void			parser();
+float			*get_buffvertex(t_opengl *o);
+t_listvertex	*get_listvertex(int fd);
+void			parser(t_opengl *o);
 
 void			opengl_init(t_opengl *o);
 void			opengl_draw(GLuint vertex_buffer);
