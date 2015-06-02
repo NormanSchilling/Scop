@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 17:47:26 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 14:11:44 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	opengl_draw(t_opengl *o)
 	glBindBuffer(GL_ARRAY_BUFFER, o->vertex_buffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, o->element_buffer);
-	glDrawElements(GL_TRIANGLES, listfragment_size(o->listfragment) * sizeof(GLint),
+	glDrawElements(GL_TRIANGLES, listfragment_size(o->listfragment) * sizeof(int),
 		GL_UNSIGNED_INT, (void*)0);
 	glDisableVertexAttribArray(0);
 
@@ -50,18 +50,14 @@ void	opengl_draw(t_opengl *o)
 
 void	opengl_before_loop(t_opengl *o)
 {
-	GLfloat		data[] = { -0.5f, -0.5f, 0.0f,
-							0.5f, -0.5f, 0.0f,
-							0.0f, 0.5f, 0.0f };
-	GLint		data_i[] = { 0, 1, 2 };
-
 	glGenVertexArrays(1, &(o->vertex_array_id));
 	glBindVertexArray(o->vertex_array_id);
 	o->m_projection = matrice_projection(60.0f, 1.0f, 100.0f);
 	o->m_view = matrice_init();
 	o->m_view.mat[3][2] = 10;
+	o->m_view.mat[3][1] = -3;
 	o->m_model = matrice_init();
-	o->m_rotate = matrice_rotate_y(10);
+	o->m_rotate = matrice_rotate_y(3);
 	o->program = load_program();
 	o->m_view_location = glGetUniformLocation(o->program, "view");
 	o->m_model_location = glGetUniformLocation(o->program, "model");
@@ -69,13 +65,13 @@ void	opengl_before_loop(t_opengl *o)
 
 	glGenBuffers(1, &(o->vertex_buffer));
 	glBindBuffer(GL_ARRAY_BUFFER, o->vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(data),
-		data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, listvertex_size(o->listvertex) * sizeof(float),
+		o->buffvertex, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &(o->element_buffer));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, o->element_buffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(data_i),
-		data_i, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, listfragment_size(o->listfragment) * sizeof(int),
+		o->bufffragment, GL_STATIC_DRAW);
 }
 
 void	opengl_loop(t_opengl *o)

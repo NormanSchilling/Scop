@@ -6,11 +6,21 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 16:02:14 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 14:38:17 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 12:20:14 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+int			get_size_of_split(char **split)
+{
+	int		i;
+
+	i = 0;
+	while (split[i])
+		i++;
+	return (i);
+}
 
 int			check_shader_error(GLuint shader,
 	GLint	compile_status, char *filename)

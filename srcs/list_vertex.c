@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 15:01:30 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 17:57:45 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 12:06:34 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ t_listvertex	*ft_listvertex_new(float point)
 {
 	t_listvertex	*node;
 
-	if ((node = (t_listvertex *)malloc(sizeof(t_listvertex))) == NULL)
+	node = NULL;
+	node = (t_listvertex *)malloc(sizeof(t_listvertex));
+	if (node == NULL)
 		return (NULL);
-
-	node->point = point;
-	printf("node->point = %f\n", node->point);
-	node->next = NULL;
+	else
+	{
+		node->point = point;
+		node->next = NULL;
+	}
 	return (node);
 }

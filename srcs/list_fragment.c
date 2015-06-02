@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 17:07:01 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 17:21:28 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 12:07:28 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,14 @@ t_listfragment	*ft_listfragment_new(float point)
 {
 	t_listfragment	*node;
 
-	if ((node = (t_listfragment *)malloc(sizeof(t_listfragment))) == NULL)
+	node = NULL;
+	node = (t_listfragment *)malloc(sizeof(t_listfragment));
+	if (node == NULL)
 		return (NULL);
-	node->point = point;
-	node->next = NULL;
+	else
+	{
+		node->point = point;
+		node->next = NULL;
+	}
 	return (node);
 }
