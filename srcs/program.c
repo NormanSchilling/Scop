@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/27 11:34:45 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/27 16:22:30 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 16:02:14 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			check_program_error(GLuint program, GLint link_status)
 	return (0);
 }
 
-GLuint		load_program()
+GLuint		load_program(void)
 {
 	GLuint		program;
 	GLint		link_status;
@@ -59,6 +59,5 @@ GLuint		load_program()
 		glDeleteProgram(program);
 		exit(-1);
 	}
-
 	return (program);
 }

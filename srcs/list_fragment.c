@@ -6,13 +6,13 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 17:07:01 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 12:07:28 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 15:18:58 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-int		listfragment_size(t_listfragment *beginlist)
+int				listfragment_size(t_listfragment *beginlist)
 {
 	t_listfragment	*node;
 	int				i;
@@ -27,7 +27,8 @@ int		listfragment_size(t_listfragment *beginlist)
 	return (i);
 }
 
-void	listfragment_pushback(t_listfragment **beginlist, t_listfragment *newlist)
+void			listfragment_pushback(t_listfragment **beginlist,
+	t_listfragment *newlist)
 {
 	t_listfragment	*tmp;
 

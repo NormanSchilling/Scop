@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 16:02:14 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 12:20:14 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 16:05:59 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			get_size_of_split(char **split)
 }
 
 int			check_shader_error(GLuint shader,
-	GLint	compile_status, char *filename)
+	GLint compile_status, char *filename)
 {
 	GLint		logsize;
 	char		*log_shader;
@@ -63,7 +63,7 @@ GLuint		load_shader(GLenum type, char *filename)
 	src = load_file(filename);
 	if (src == NULL)
 		exit(-1);
-	glShaderSource(shader, 1, (const char * const *) &src, NULL);
+	glShaderSource(shader, 1, (const char*const*)&src, NULL);
 	glCompileShader(shader);
 	free(src);
 	if (check_shader_error(shader, compile_status, filename) == 1)
@@ -97,6 +97,5 @@ char		*load_file(char *filename)
 		ft_bzero(buff, 1024);
 	}
 	close(fd);
-
 	return (content);
 }

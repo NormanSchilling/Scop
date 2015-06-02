@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 11:55:21 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/01 13:18:51 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 15:22:34 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,15 @@ t_mat		matrice_multiplication(t_mat m_one, t_mat m_two)
 	t_mat	m;
 
 	m.i = 0;
-	while ( m.i < 4)
+	while (m.i < 4)
 	{
 		m.j = 0;
-		while ( m.j < 4 )
+		while (m.j < 4)
 		{
 			m.mat[m.i][m.j] = matrice_multiplication_result(&m, m_one, m_two);
 			m.j++;
 		}
 		m.i++;
 	}
-
 	return (m);
 }

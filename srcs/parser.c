@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 13:51:54 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 14:57:30 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 16:01:47 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ t_listvertex		*get_listvertex(int fd)
 		if (line[0] == 'v')
 		{
 			vertex = ft_strsplit(line, ' ');
-			i = 1;
-			while (i < get_size_of_split(vertex))
-			{
-				listvertex_pushback(&listvertex, ft_listvertex_new(ft_atof(vertex[i])));
-				i++;
-			}
+			i = get_size_of_split(vertex);
+			get_triangle(&listvertex, vertex, i);
 			i = 0;
 			while (i++ < get_size_of_split(vertex))
 				free(vertex[i - 1]);
@@ -63,22 +59,19 @@ t_listfragment		*get_listfragment(int fd)
 				get_first_triangle(&listfragment, frag, i - 1);
 				get_second_triangle(&listfragment, frag, i);
 			}
-			i = 0;
-			while (i++ < get_size_of_split(frag))
-				free(frag[i - 1]);
+			free_frag(frag);
 			free(line);
 		}
 	}
 	return (listfragment);
 }
 
-void		get_buffvertex(t_opengl *o)
+void				get_buffvertex(t_opengl *o)
 {
 	int				i;
 	t_listvertex	*tmp;
 
 	tmp = o->listvertex;
-
 	i = listvertex_size(o->listvertex);
 	o->buffvertex = (float*)malloc(sizeof(float) * i);
 	if (o->buffvertex == NULL)
@@ -92,13 +85,12 @@ void		get_buffvertex(t_opengl *o)
 	}
 }
 
-void		get_bufffragment(t_opengl *o)
+void				get_bufffragment(t_opengl *o)
 {
 	int				i;
 	t_listfragment	*tmp;
 
 	tmp = o->listfragment;
-
 	i = listfragment_size(o->listfragment);
 	o->bufffragment = (int*)malloc(sizeof(int) * i);
 	if (o->bufffragment == NULL)
@@ -112,14 +104,14 @@ void		get_bufffragment(t_opengl *o)
 	}
 }
 
-void		parser(t_opengl *o)
+void				parser(t_opengl *o)
 {
-	int				fd;
+	int		fd;
 
-	fd = open("resources/42.obj", O_RDONLY);
+	fd = open("resources/teapot.obj", O_RDONLY);
 	o->listvertex = get_listvertex(fd);
 	get_buffvertex(o);
-	fd = open("resources/42.obj", O_RDONLY);
+	fd = open("resources/teapot.obj", O_RDONLY);
 	o->listfragment = get_listfragment(fd);
 	get_bufffragment(o);
 	close(fd);

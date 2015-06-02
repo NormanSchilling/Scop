@@ -6,13 +6,13 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 15:01:30 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 12:06:34 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 15:19:52 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-int		listvertex_size(t_listvertex *beginlist)
+int				listvertex_size(t_listvertex *beginlist)
 {
 	t_listvertex	*node;
 	int				i;
@@ -27,8 +27,8 @@ int		listvertex_size(t_listvertex *beginlist)
 	return (i);
 }
 
-
-void	listvertex_pushback(t_listvertex **beginlist, t_listvertex *newlist)
+void			listvertex_pushback(t_listvertex **beginlist,
+	t_listvertex *newlist)
 {
 	t_listvertex	*tmp;
 
@@ -42,7 +42,6 @@ void	listvertex_pushback(t_listvertex **beginlist, t_listvertex *newlist)
 		tmp->next = newlist;
 	}
 }
-
 
 t_listvertex	*ft_listvertex_new(float point)
 {

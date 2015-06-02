@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/27 15:35:12 by nschilli          #+#    #+#             */
-/*   Updated: 2015/05/28 16:29:10 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 15:21:54 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ t_mat		matrice_projection(float angle, float near_z, float far_z)
 	m = matrice_init();
 	m.mat[0][0] = 1.0f / (ratio * t_angle);
 	m.mat[1][1] = 1.0f / t_angle;
-	m.mat[2][2] = (- near_z - far_z) / z_range;
+	m.mat[2][2] = (-near_z - far_z) / z_range;
 	m.mat[2][3] = 1.0f;
 	m.mat[3][2] = (2.0f * far_z * near_z) / z_range;
 	m.mat[3][3] = 0.0f;
-
 	return (m);
 }
 
@@ -62,7 +61,6 @@ t_mat		matrice_scale(float x, float y, float z)
 	m.mat[0][0] = x;
 	m.mat[1][1] = y;
 	m.mat[2][2] = z;
-
 	return (m);
 }
 
@@ -74,11 +72,10 @@ t_mat		matrice_translate(float x, float y, float z)
 	m.mat[3][0] = x;
 	m.mat[3][1] = y;
 	m.mat[3][2] = z;
-
 	return (m);
 }
 
-t_mat		matrice_init()
+t_mat		matrice_init(void)
 {
 	t_mat	m;
 

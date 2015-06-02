@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 14:11:44 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/02 15:24:47 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	opengl_init(t_opengl *o)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	o->window = glfwCreateWindow( WIDTH, HEIGHT, "Scop", NULL, NULL);
+	o->window = glfwCreateWindow(WIDTH, HEIGHT, "Scop", NULL, NULL);
 	if (o->window == NULL)
 	{
 		ft_putendl("Error : Window with opengl can't be null.");
@@ -41,11 +41,9 @@ void	opengl_draw(t_opengl *o)
 	glBindBuffer(GL_ARRAY_BUFFER, o->vertex_buffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, o->element_buffer);
-	glDrawElements(GL_TRIANGLES, listfragment_size(o->listfragment) * sizeof(int),
-		GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, listfragment_size(o->listfragment)
+		* sizeof(int), GL_UNSIGNED_INT, (void*)0);
 	glDisableVertexAttribArray(0);
-
-
 }
 
 void	opengl_before_loop(t_opengl *o)
@@ -63,14 +61,20 @@ void	opengl_before_loop(t_opengl *o)
 	o->m_model_location = glGetUniformLocation(o->program, "model");
 	o->m_projection_location = glGetUniformLocation(o->program, "projection");
 
+	glGenTextures(1, &(o->tex));
+	glBindTexture(GL_TEXTURE_2D, o->tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+
 	glGenBuffers(1, &(o->vertex_buffer));
 	glBindBuffer(GL_ARRAY_BUFFER, o->vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, listvertex_size(o->listvertex) * sizeof(float),
+	glBufferData(GL_ARRAY_BUFFER,
+		listvertex_size(o->listvertex) * sizeof(float),
 		o->buffvertex, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &(o->element_buffer));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, o->element_buffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, listfragment_size(o->listfragment) * sizeof(int),
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+		listfragment_size(o->listfragment) * sizeof(int),
 		o->bufffragment, GL_STATIC_DRAW);
 }
 
