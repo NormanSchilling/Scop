@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 15:24:47 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/04 15:52:57 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	opengl_init(t_opengl *o)
 	}
 	glfwMakeContextCurrent(o->window);
 	glfwSwapInterval(1);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 }
 
 void	opengl_draw(t_opengl *o)
@@ -61,10 +63,6 @@ void	opengl_before_loop(t_opengl *o)
 	o->m_model_location = glGetUniformLocation(o->program, "model");
 	o->m_projection_location = glGetUniformLocation(o->program, "projection");
 
-	glGenTextures(1, &(o->tex));
-	glBindTexture(GL_TEXTURE_2D, o->tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-
 	glGenBuffers(1, &(o->vertex_buffer));
 	glBindBuffer(GL_ARRAY_BUFFER, o->vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER,
@@ -76,6 +74,19 @@ void	opengl_before_loop(t_opengl *o)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
 		listfragment_size(o->listfragment) * sizeof(int),
 		o->bufffragment, GL_STATIC_DRAW);
+
+	glActiveTexture(GL_TEXTURE0);
+	glGenTextures(1, &(o->tex.tex));
+	glBindTexture(GL_TEXTURE_2D, o->tex.tex);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, o->tex.width, o->tex.height, 0,
+		GL_BGR, GL_UNSIGNED_BYTE, o->tex.buff_texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void	opengl_loop(t_opengl *o)

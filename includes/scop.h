@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 16:01:38 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/04 14:17:08 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ typedef struct				s_listfragment
 	struct s_listfragment	*next;
 }							t_listfragment;
 
+typedef struct				s_texture
+{
+	GLuint					tex;
+	unsigned char			header[54];
+	int						data_pos;
+	int						width;
+	int						height; 
+	int						image_size;
+	unsigned char			*buff_texture;	
+}							t_texture;
+
 typedef struct				s_opengl
 {
 	GLFWwindow				*window;
@@ -49,7 +60,6 @@ typedef struct				s_opengl
 	GLuint					vertex_buffer;
 	GLuint					element_buffer;
 	GLuint					vertex_array_id;
-	GLuint					tex;
 	t_mat					m_projection;
 	t_mat					m_view;
 	t_mat					m_model;
@@ -58,7 +68,11 @@ typedef struct				s_opengl
 	GLfloat					*buffvertex;
 	t_listfragment			*listfragment;
 	GLint					*bufffragment;
+	t_texture				tex;
 }							t_opengl;
+
+int							check_error_load_texture(t_opengl *o, FILE *file);
+void						load_texture(t_opengl *o);
 
 void						get_triangle(t_listvertex **listvertex,
 	char **vertex, int size);

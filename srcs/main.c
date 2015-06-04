@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:09:29 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 15:19:57 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/04 14:17:21 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		main(void)
 {
 	t_opengl	o;
 
+	load_texture(&o);
 	parser(&o);
 	opengl_init(&o);
 	opengl_before_loop(&o);
