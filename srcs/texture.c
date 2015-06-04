@@ -6,11 +6,26 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 16:20:26 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/04 15:57:17 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/04 16:03:15 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+void	init_texture(t_opengl *o)
+{
+	glActiveTexture(GL_TEXTURE0);
+	glGenTextures(1, &(o->tex.tex));
+	glBindTexture(GL_TEXTURE_2D, o->tex.tex);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, o->tex.width, o->tex.height, 0,
+		GL_BGR, GL_UNSIGNED_BYTE, o->tex.buff_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_LINEAR_MIPMAP_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+}
 
 int		check_error_load_texture(t_opengl *o, FILE *file)
 {
@@ -21,7 +36,7 @@ int		check_error_load_texture(t_opengl *o, FILE *file)
 	}
 	if (fread(o->tex.header, 1, 54, file) != 54)
 	{
-		printf("Not a correct JPG file\n"); 
+		ft_putstr("Not a correct JPG file\n");
 		return (1);
 	}
 	if (o->tex.header[0] != 'B' || o->tex.header[1] != 'M')
@@ -32,11 +47,11 @@ int		check_error_load_texture(t_opengl *o, FILE *file)
 	return (0);
 }
 
-void		load_texture(t_opengl *o)
+void	load_texture(t_opengl *o)
 {
 	FILE			*file;
 
-	file = fopen("resources/cat.bmp","rb");
+	file = fopen("resources/cat.bmp", "rb");
 	if (check_error_load_texture(o, file) == 1)
 		exit(-1);
 	o->tex.data_pos = *(int*)&(o->tex.header[0x0A]);

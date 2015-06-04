@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/04 14:17:08 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/04 16:00:47 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct				s_opengl
 	t_texture				tex;
 }							t_opengl;
 
+void						init_texture(t_opengl *o);
 int							check_error_load_texture(t_opengl *o, FILE *file);
 void						load_texture(t_opengl *o);
 
