@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 16:20:26 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/04 15:44:41 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/04 15:57:17 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		load_texture(t_opengl *o)
 {
 	FILE			*file;
 
-	file = fopen("resources/water.bmp","rb");
+	file = fopen("resources/cat.bmp","rb");
 	if (check_error_load_texture(o, file) == 1)
 		exit(-1);
 	o->tex.data_pos = *(int*)&(o->tex.header[0x0A]);
