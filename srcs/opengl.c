@@ -6,13 +6,35 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/04 16:00:26 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/05 12:11:47 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	opengl_init(t_opengl *o)
+static void key_callback(GLFWwindow *window, int key, int scancode,
+	int action, int mods)
+{
+	t_opengl	*o;
+	GLint		render_mode;
+	static int	count = 0;
+
+	o = get_opengl();
+	(void)scancode;
+	(void)mods;
+	(void)window;
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	{
+		if (count == 0)
+			count++;
+		else
+			count--;
+		render_mode = glGetUniformLocation(o->program, "renderMode");
+		glUniform1i(render_mode, count);
+	}
+}
+
+void		opengl_init(t_opengl *o)
 {
 	if (!glfwInit())
 	{
@@ -37,7 +59,7 @@ void	opengl_init(t_opengl *o)
 	glDepthFunc(GL_LESS);
 }
 
-void	opengl_draw(t_opengl *o)
+void		opengl_draw(t_opengl *o)
 {
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, o->vertex_buffer);
@@ -48,7 +70,7 @@ void	opengl_draw(t_opengl *o)
 	glDisableVertexAttribArray(0);
 }
 
-void	opengl_before_loop(t_opengl *o)
+void		opengl_before_loop(t_opengl *o)
 {
 	glGenVertexArrays(1, &(o->vertex_array_id));
 	glBindVertexArray(o->vertex_array_id);
@@ -75,7 +97,7 @@ void	opengl_before_loop(t_opengl *o)
 	init_texture(o);
 }
 
-void	opengl_loop(t_opengl *o)
+void		opengl_loop(t_opengl *o)
 {
 	while (glfwGetKey(o->window, GLFW_KEY_ESCAPE) != GLFW_PRESS
 		&& !glfwWindowShouldClose(o->window))
@@ -89,6 +111,7 @@ void	opengl_loop(t_opengl *o)
 		o->m_model = matrice_multiplication(o->m_model, o->m_rotate);
 		glUniformMatrix4fv(o->m_model_location, 1, GL_FALSE,
 			&(o->m_model.mat[0][0]));
+		glfwSetKeyCallback(o->window, key_callback);
 		opengl_draw(o);
 		glfwPollEvents();
 		glfwSwapBuffers(o->window);

@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 13:51:54 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 16:01:47 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/05 10:31:28 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,14 @@ void				get_bufffragment(t_opengl *o)
 	}
 }
 
-void				parser(t_opengl *o)
+void				parser(t_opengl *o, char *filename)
 {
 	int		fd;
 
-	fd = open("resources/teapot.obj", O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	o->listvertex = get_listvertex(fd);
 	get_buffvertex(o);
-	fd = open("resources/teapot.obj", O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	o->listfragment = get_listfragment(fd);
 	get_bufffragment(o);
 	close(fd);

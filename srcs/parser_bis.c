@@ -6,14 +6,13 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/02 14:28:58 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/02 16:01:58 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/05 11:24:09 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void		get_triangle(t_listvertex **listvertex, char **vertex,
-	int size)
+void		get_triangle(t_listvertex **listvertex, char **vertex, int size)
 {
 	int		i;
 

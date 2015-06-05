@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/04 16:00:47 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/05 12:11:22 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_listvertex				*get_listvertex(int fd);
 t_listfragment				*get_listfragment(int fd);
 void						get_buffvertex(t_opengl *o);
 void						get_bufffragment(t_opengl *o);
-void						parser(t_opengl *o);
+void						parser(t_opengl *o, char *filename);
 
 void						opengl_init(t_opengl *o);
 void						opengl_draw(t_opengl *o);
@@ -114,5 +114,7 @@ char						*load_file(char *filename);
 int							check_program_error(GLuint program,
 	GLint link_status);
 GLuint						load_program();
+
+t_opengl					*get_opengl(void);
 
 #endif
