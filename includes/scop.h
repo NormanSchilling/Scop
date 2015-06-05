@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 11:28:38 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/05 12:11:22 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/05 13:45:04 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ typedef struct				s_texture
 	unsigned char			*buff_texture;	
 }							t_texture;
 
+typedef struct				s_vertex
+{
+	float					x;
+	float					y;
+	float					z;
+}							t_vertex;
+
 typedef struct				s_opengl
 {
 	GLFWwindow				*window;
@@ -59,6 +66,7 @@ typedef struct				s_opengl
 	GLuint					program;
 	GLuint					vertex_buffer;
 	GLuint					element_buffer;
+	GLuint					normal_buffer;
 	GLuint					vertex_array_id;
 	t_mat					m_projection;
 	t_mat					m_view;
@@ -66,6 +74,7 @@ typedef struct				s_opengl
 	t_mat					m_rotate;
 	t_listvertex			*listvertex;
 	GLfloat					*buffvertex;
+	t_vertex				*buffnormal;
 	t_listfragment			*listfragment;
 	GLint					*bufffragment;
 	t_texture				tex;
@@ -93,6 +102,10 @@ int							listvertex_size(t_listvertex *beginlist);
 void						listvertex_pushback(t_listvertex **beginlist,
 	t_listvertex *newlist);
 t_listvertex				*ft_listvertex_new(float point);
+
+t_vertex					add_vertex(t_vertex v, t_vertex v2);
+t_vertex					soustract_vertex(t_vertex v, t_vertex v2);
+void						get_buffnormal(t_opengl *o);
 
 t_listvertex				*get_listvertex(int fd);
 t_listfragment				*get_listfragment(int fd);
