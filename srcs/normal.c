@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/05 13:06:29 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/08 11:26:10 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/08 11:51:18 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,5 @@ void		get_buffnormal(t_opengl *o)
 		set_buffnormal(o, indices, vector[0]);
 		j += 3;
 	}
-	free(indices);
-	free(vector);
-	free(vertex);
 	set_normalize(o, i);
 }
