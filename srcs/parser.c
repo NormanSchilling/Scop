@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/06/01 13:51:54 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/05 10:31:28 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/05 13:22:16 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void				parser(t_opengl *o, char *filename)
 	fd = open(filename, O_RDONLY);
 	o->listfragment = get_listfragment(fd);
 	get_bufffragment(o);
+	get_buffnormal(o);
 	close(fd);
 }

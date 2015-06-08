@@ -6,7 +6,7 @@
 #    By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/26 11:29:55 by nschilli          #+#    #+#              #
-#    Updated: 2015/06/02 16:20:43 by nschilli         ###   ########.fr        #
+#    Updated: 2015/06/08 10:53:31 by nschilli         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ CFILES =	main.c \
 			list_fragment.c \
 			parser_bis.c \
 			texture.c \
+			normal.c \
+			normal_bis.c \
 
 SRC = $(addprefix $(SRCDIR), $(CFILES))
 
