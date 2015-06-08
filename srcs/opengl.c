@@ -6,7 +6,7 @@
 /*   By: nschilli <nschilli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 13:55:08 by nschilli          #+#    #+#             */
-/*   Updated: 2015/06/08 11:14:50 by nschilli         ###   ########.fr       */
+/*   Updated: 2015/06/08 11:30:28 by nschilli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ void		opengl_before_loop(t_opengl *o)
 		* sizeof(float), o->buffvertex, GL_STATIC_DRAW);
 	glGenBuffers(1, &(o->element_buffer));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, o->element_buffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-		listfragment_size(o->listfragment)
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, listfragment_size(o->listfragment)
 		* sizeof(int), o->bufffragment, GL_STATIC_DRAW);
 	glGenBuffers(1, &o->normal_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, o->normal_buffer);
